@@ -1,13 +1,54 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+* {
+  font-family: "Montserrat, Helvetica, Arial sans-serif";
+  color: #6e6b7b;
+  font-size: 14px; 
+  /* box-sizing: border-box;
+  background-color: red, */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Common css-start */
+.py-100 {
+  padding: 100px 0;
+}
+
+.py-50 {
+  padding: 50px 0;
+}
+
+.py-30 {
+  padding: 30px 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ul li {
+  list-style: none;
+} */
+
+.fw-semibold {
+  font-weight: 500 !important;
+}
+
+.fw-bold {
+  font-weight: 600 !important;
+}
+
+.text-grey {
+  color: #625f6e;
+}
+
+.text-darkgrey {
+  color: #5e5873;
+}
+
+.bg-lightgrey {
+  background-color: #d9d9d9;
+}
+
+.fs-16 {
+  font-size: 16px;
 }
