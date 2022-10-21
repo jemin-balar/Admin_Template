@@ -20,7 +20,7 @@ export default function Sidebar() {
     {
       text: "Dashboard",
       icon: <Home color="secondary" />,
-      path: "/",
+      path: "/home",
     },
     {
       text: "User",

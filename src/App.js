@@ -1,18 +1,17 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./Component/Layout";
+import Login from "./Component/Authentication/Login";
 import Dashboard from "./Pages/Dashboard";
 import User from "./Pages/User";
 
 function App() {
   return (
     <>
-      <Layout>    
-        <Routes>
-          <Route exact path="/" element={<Dashboard />} />
-          <Route exact path="/user" element={<User />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/home" element={<Dashboard />} />
+        <Route exact path="/user" element={<User />} />
+      </Routes>
     </>
   );
 }
