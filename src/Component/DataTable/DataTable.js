@@ -14,28 +14,18 @@ const getMuiTheme = () =>
           fixedHeader: {
             backgroundColor: "#F3F2F7",
           },
-          data: {
-          
+          data: {          
             fontWeight: 700,
           },
         },
-      },
-
+      },   
       MUIDataTableBodyCell: {
         styleOverrides: {
           root: {
-          
+            color: "#6e6b7b",
           },
         },
-      },
-      MuiIconButton: {
-        styleOverrides: {
-          root: {
-          
-          },
-        },
-      },
-
+      },   
       MuiTablePagination: {
         styleOverrides: {
           selectLabel: {

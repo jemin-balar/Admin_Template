@@ -9,6 +9,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DataTable from "../Component/DataTable/DataTable";
@@ -25,6 +26,11 @@ export default function Dashboard() {
     {
       name: "name",
       label: "Name",
+      // options: {
+      //   customBodyRender: (value, tableMeta, updateValue) => (
+      //     <Button sx={{cursor:"pointer"}} onClick={() => alert(3)}></Button>
+      //   )
+      // },
     },
     {
       name: "company",
@@ -48,7 +54,7 @@ export default function Dashboard() {
   ];
 
   const options = {
-    serverSide: true,
+    // serverSide: true,
     selectableRows: false,
     download: false,
     print: false,

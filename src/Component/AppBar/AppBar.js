@@ -38,7 +38,7 @@ export default function NavBar() {
           position="fixed"
           className="mt-4 d-flex"
         >
-          <Toolbar>
+          <Toolbar sx={{backgroundColor:"#ffffff"}}>
             <IconButton size="large" color="inherit" className="d-flex">
               <MailOutlineIcon />
             </IconButton>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Grid,
@@ -12,11 +12,12 @@ import DataTable from "../Component/DataTable/DataTable";
 import { styled } from "@mui/material";
 import Layout from "../Component/Layout";
 
-export default function User() {
+export default function User() {  
+
   const columns = [
     {
       name: "name",
-      label: "Name",
+      label: "Name",    
     },
     {
       name: "company",
@@ -34,13 +35,17 @@ export default function User() {
 
   const data = [
     ["Joe James", "Test Corp", "Yonkers", "NY"],
-    ["John Walsh", "Test Corp", "Hartford", "CT"],
-    ["Bob Herm", "Test Corp", "Tampa", "FL"],
-    ["James Houston", "Test Corp", "Dallas", "TX"],
+     ["John Walsh", "Test Corp", "Hartford", "CT"],
+     ["Bob Herm", "Test Corp", "Tampa", "FL"],
+     ["James Houston", "Test Corp", "Dallas", "TX"],
+     ["Joe James", "Test Corp", "Yonkers", "NY"],
+     ["John Walsh", "Test Corp", "Hartford", "CT"],
+     ["Bob Herm", "Test Corp", "Tampa", "FL"],
+     ["James Houston", "Test Corp", "Dallas", "TX"]
   ];
 
   const options = {
-    serverSide: true,
+    // serverSide: true,
     selectableRows: false,
     download: false,
     print: false,
