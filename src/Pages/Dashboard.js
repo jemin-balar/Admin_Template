@@ -9,14 +9,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button,
 } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DataTable from "../Component/DataTable/DataTable";
 import Layout from "../Component/Layout";
+import { useNavigate } from "react-router-dom"
 
 export default function Dashboard() {
   const [newUser, setNewUSer] = React.useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setNewUSer(e.target.value);
@@ -26,11 +27,11 @@ export default function Dashboard() {
     {
       name: "name",
       label: "Name",
-      // options: {
-      //   customBodyRender: (value, tableMeta, updateValue) => (
-      //     <Button sx={{cursor:"pointer"}} onClick={() => alert(3)}></Button>
-      //   )
-      // },
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <span className="cursor-pointer" onClick={() => navigate("/user")}>{tableMeta.rowData[0]}</span>
+        )
+      },
     },
     {
       name: "company",
@@ -59,6 +60,7 @@ export default function Dashboard() {
     download: false,
     print: false,
     viewColumns: false,
+    filter:false
   };
 
   return (

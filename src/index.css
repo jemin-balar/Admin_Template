@@ -2,10 +2,8 @@
 
 * {
   font-family: "Montserrat, Helvetica, Arial sans-serif";
-  color: #6e6b7b;
-  font-size: 14px; 
-  /* box-sizing: border-box;
-  background-color: red, */
+  color: #6E6B7B;
+  font-size: 14px;   
 }
 
 /* Common css-start */
@@ -23,6 +21,10 @@
 
 a {
   text-decoration: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 /* ul li {

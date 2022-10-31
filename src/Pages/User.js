@@ -50,6 +50,8 @@ export default function User() {
     download: false,
     print: false,
     viewColumns: false,
+    search:false,
+    filter:false
   };
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
