@@ -27,6 +27,7 @@ export default function Occupation(props) {
             name="occupation"
             variant="standard"
             placeholder="Occupation"
+            required
             value={fields.occupation}
             onChange={handleChange}
           />

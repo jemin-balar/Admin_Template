@@ -27,6 +27,7 @@ export default function PassionsOrHobbies(props) {
             name="passionsorhobbies"
             variant="standard"
             placeholder="Passions Or Hobbies"
+            required
             value={fields.passionsorhobbies}
             onChange={handleChange}
           />

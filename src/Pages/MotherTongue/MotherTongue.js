@@ -3,11 +3,7 @@ import CustomModal from "../../Component/CustomModal/CustomModal";
 import { Typography, FormControl, TextField, Button } from "@mui/material";
 
 export default function MotherTongue(props) {
-  const { openModal, closeModal, title, fields, handleChange } = props;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const { openModal, closeModal, title, fields, handleChange, motherTongueError, handleSubmit } = props;
 
   return (
     <CustomModal open={openModal} onClose={closeModal}>
@@ -33,7 +29,10 @@ export default function MotherTongue(props) {
             placeholder="Mother Tongue"
             value={fields.mothertongue}
             onChange={handleChange}
-          />
+            required           
+            error={!!motherTongueError}
+            helperText={motherTongueError}
+          />         
           <div className="mt-5">
             <Button
               type="button"

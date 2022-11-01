@@ -6,18 +6,22 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCommunity from "./Community";
+import DeleteCommunity from "../../Component/DeleteModal/DeleteModal";
 
 export default function CommunityList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({   
+  const initialData = {
     communityid: "",
     community: "",
-  });
+  };
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Community" : "Add Community");
+    setFields(editData ? editData : fields);
+    setTitle(editData?.communityid ? "Edit Community" : "Add Community");
   };
 
   const handleClose = () => {
@@ -29,7 +33,15 @@ export default function CommunityList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [   
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "community_id",
       label: "Community ID",
@@ -45,12 +57,28 @@ export default function CommunityList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Community">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    communityid: tableMeta.rowData[0],
+                    community: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
             <Tooltip disableFocusListener title="Delete Community">
-              <Button sx={{ color: "#ff5252" }}>
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    communityid: tableMeta.rowData[0],
+                    community: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,16 +89,15 @@ export default function CommunityList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { community_id: 1, community: "Test Corp" },
+    { community_id: 2, community: "Test Corp" },
+    { community_id: 3, community: "Test Corp" },
+    { community_id: 4, community: "Test Corp" },
   ];
-
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -101,6 +128,11 @@ export default function CommunityList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+             <DeleteCommunity
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>

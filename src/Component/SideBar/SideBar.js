@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Drawer,
   Typography,
@@ -7,16 +7,31 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Collapse,
 } from "@mui/material";
 import { Home, Person } from "@mui/icons-material";
-import SchoolIcon from '@mui/icons-material/School';
-import TranslateIcon from '@mui/icons-material/Translate';
+import SchoolIcon from "@mui/icons-material/School";
+import TranslateIcon from "@mui/icons-material/Translate";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import TempleHinduIcon from "@mui/icons-material/TempleHindu";
+import PeopleIcon from "@mui/icons-material/People";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import BusinessIcon from "@mui/icons-material/Business";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import GridViewIcon from '@mui/icons-material/GridView';
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles.module.css";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   const menuItems = [
     {
@@ -31,17 +46,17 @@ export default function Sidebar() {
     },
     {
       text: "Account",
-      icon: <Person color="secondary" />,
+      icon: <AccountCircleIcon color="secondary" />,
       path: "/account",
     },
     {
       text: "Religion",
-      icon: <Person color="secondary" />,
+      icon: <TempleHinduIcon color="secondary" />,
       path: "/religion",
     },
     {
       text: "Community",
-      icon: <Person color="secondary" />,
+      icon: <PeopleIcon color="secondary" />,
       path: "/community",
     },
     {
@@ -51,12 +66,12 @@ export default function Sidebar() {
     },
     {
       text: "Work Experience",
-      icon: <SchoolIcon color="secondary" />,
+      icon: <BusinessCenterIcon color="secondary" />,
       path: "/workexperience",
     },
     {
       text: "Occupation",
-      icon: <SchoolIcon color="secondary" />,
+      icon: <BusinessIcon color="secondary" />,
       path: "/occupation",
     },
     {
@@ -111,6 +126,33 @@ export default function Sidebar() {
               </ListItemButton>
             </ListItem>
           ))}
+          <ListItem>
+            <ListItemButton onClick={handleClick}>
+              <ListItemIcon>
+                <GridViewIcon />
+              </ListItemIcon>
+              <ListItemText primary="IAP Table" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/android")}>
+                <ListItemIcon>
+                  <GridViewIcon />
+                </ListItemIcon>
+                <ListItemText primary="Android Table" />
+              </ListItemButton>
+            </List>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/ios")}>
+                <ListItemIcon>
+                  <GridViewIcon />
+                </ListItemIcon>
+                <ListItemText primary="IOS Table" />
+              </ListItemButton>
+            </List>
+          </Collapse>
         </List>
         {/* list links */}
       </Drawer>

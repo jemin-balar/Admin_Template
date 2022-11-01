@@ -27,6 +27,7 @@ export default function Education(props) {
             name="education"
             variant="standard"
             placeholder="Education"
+            required
             value={fields.education}
             onChange={handleChange}
           />        

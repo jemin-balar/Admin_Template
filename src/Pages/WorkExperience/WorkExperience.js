@@ -27,6 +27,7 @@ export default function WorkExperience(props) {
             name="workexperience"
             variant="standard"
             placeholder="Work Experience"
+            required
             value={fields.workexperience}
             onChange={handleChange}
           />           

@@ -6,18 +6,26 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddWorkExperience from "../WorkExperience/WorkExperience";
+import DeleteWorkExperience from "../../Component/DeleteModal/DeleteModal";
 
 export default function WorkExperienceList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({    
+  const initialData = {
     workexperienceid: "",
-    workexperience: "",   
-  });
+    workexperience: "",
+  };
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Work Experience" : "Add Work Experience");
+    setFields(editData ? editData : fields);
+    setTitle(
+      editData?.workexperienceid
+        ? "Edit Work Experience"
+        : "Add Work Experience"
+    );
   };
 
   const handleClose = () => {
@@ -29,15 +37,23 @@ export default function WorkExperienceList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [    
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "workexperience_id",
-      label: "Work Experience ID",      
+      label: "Work Experience ID",
     },
     {
       name: "workexperience",
-      label: "Work Experience",    
-    },   
+      label: "Work Experience",
+    },
     {
       label: "Action",
       name: "action",
@@ -45,12 +61,28 @@ export default function WorkExperienceList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Work Experience">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    workexperienceid: tableMeta.rowData[0],
+                    workexperience: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
             <Tooltip disableFocusListener title="Delete Work Experience">
-              <Button sx={{ color: "#ff5252" }}>
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    workexperienceid: tableMeta.rowData[0],
+                    workexperience: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,15 +93,15 @@ export default function WorkExperienceList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { workexperience_id: 1, workexperience: "Test Corp" },
+    { workexperience_id: 2, workexperience: "Test Corp" },
+    { workexperience_id: 3, workexperience: "Test Corp" },
+    { workexperience_id: 4, workexperience: "Test Corp" },
   ];
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -100,6 +132,11 @@ export default function WorkExperienceList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+            <DeleteWorkExperience
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>

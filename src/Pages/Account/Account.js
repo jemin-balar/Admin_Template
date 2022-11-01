@@ -43,6 +43,7 @@ export default function Account(props) {
             placeholder="Account"
             value={fields.account}
             onChange={handleChange}
+            required
           />         
           <input
             accept="image/*"

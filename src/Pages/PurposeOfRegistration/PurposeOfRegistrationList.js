@@ -6,18 +6,26 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddPurposeOfRegistration from "./PurposeOfRegistration";
+import DeletePurposeOfRegistration from "../../Component/DeleteModal/DeleteModal";
 
 export default function PurposeOfRegistrationList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({   
+  const initialData = {
     purposeofregistrationid: "",
     purposeofregistration: "",
-  });
+  };
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Purpose Of Registration" : "Add Purpose Of Registration");
+    setFields(editData ? editData : fields);
+    setTitle(
+      editData?.purposeofregistrationid
+        ? "Edit Purpose Of Registration"
+        : "Add Purpose Of Registration"
+    );
   };
 
   const handleClose = () => {
@@ -29,7 +37,15 @@ export default function PurposeOfRegistrationList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [   
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "purposeofregistration_id",
       label: "Purpose Of Registration ID",
@@ -45,12 +61,31 @@ export default function PurposeOfRegistrationList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Purpose Of Registration">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    purposeofregistrationid: tableMeta.rowData[0],
+                    purposeofregistration: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
-            <Tooltip disableFocusListener title="Delete Purpose Of Registration">
-              <Button sx={{ color: "#ff5252" }}>
+            <Tooltip
+              disableFocusListener
+              title="Delete Purpose Of Registration"
+            >
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    purposeofregistrationid: tableMeta.rowData[0],
+                    purposeofregistration: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,16 +96,15 @@ export default function PurposeOfRegistrationList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { purposeofregistration_id: 1, purposeofregistration: "Test Corp" },
+    { purposeofregistration_id: 2, purposeofregistration: "Test Corp" },
+    { purposeofregistration_id: 3, purposeofregistration: "Test Corp" },
+    { purposeofregistration_id: 4, purposeofregistration: "Test Corp" },
   ];
-
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -101,6 +135,11 @@ export default function PurposeOfRegistrationList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+            <DeletePurposeOfRegistration
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>

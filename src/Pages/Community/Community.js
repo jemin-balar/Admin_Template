@@ -27,6 +27,7 @@ export default function Community(props) {
             name="community"
             variant="standard"
             placeholder="Community"
+            required
             value={fields.community}
             onChange={handleChange}
           />

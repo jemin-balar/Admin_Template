@@ -27,6 +27,7 @@ export default function PurposeOfRegistration(props) {
             name="purposeofregistration"
             variant="standard"
             placeholder="Purpose Of Registration"
+            required
             value={fields.purposeofregistration}
             onChange={handleChange}
           />

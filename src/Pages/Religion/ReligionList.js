@@ -6,18 +6,23 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddReligion from "../Religion/Religion";
+import DeleteReligion from "../../Component/DeleteModal/DeleteModal";
 
 export default function ReligionList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({
+  const initialData = {
     religionid: "",
-    religion: ""    
-  });
+    religion: "",
+  };
+   
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Religion" : "Add Religion");
+    setFields(editData ? editData : fields);
+    setTitle(editData?.religionid ? "Edit Religion" : "Add Religion");
   };
 
   const handleClose = () => {
@@ -29,7 +34,15 @@ export default function ReligionList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [   
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "religion_id",
       label: "Religion ID",
@@ -37,7 +50,7 @@ export default function ReligionList() {
     {
       name: "religion",
       label: "Religion",
-    },    
+    },
     {
       label: "Action",
       name: "action",
@@ -45,12 +58,28 @@ export default function ReligionList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Religion">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    religionid: tableMeta.rowData[0],
+                    religion: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
             <Tooltip disableFocusListener title="Delete Religion">
-              <Button sx={{ color: "#ff5252" }}>
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    religionid: tableMeta.rowData[0],
+                    religion: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,15 +90,15 @@ export default function ReligionList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { religion_id: 1, religion: "Test Corp" },
+    { religion_id: 2, religion: "Test Corp" },
+    { religion_id: 3, religion: "Test Corp" },
+    { religion_id: 4, religion: "Test Corp" },
   ];
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -100,6 +129,11 @@ export default function ReligionList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+             <DeleteReligion
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>

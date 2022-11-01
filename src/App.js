@@ -12,6 +12,8 @@ import Occupation from "./Pages/Occupation/OccupationList";
 import MotherTongue from "./Pages/MotherTongue/MotherTongueList";
 import PurposeOfRegistration from "./Pages/PurposeOfRegistration/PurposeOfRegistrationList";
 import PassionsOrHobbies from "./Pages/PassionsOrHobbies/PassionsOrHobbiesList";
+import AndroidTable from "./Pages/IAPTable/AndroidTableList";
+import IOSTable from "./Pages/IAPTable/IosTableList";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route exact path="/mothertongue" element={<MotherTongue />} />
         <Route exact path="/purposeofregistration" element={<PurposeOfRegistration />} />
         <Route exact path="/passionsorhobbies" element={<PassionsOrHobbies />} />
+        <Route exact path="/android" element={<AndroidTable />} />
+        <Route exact path="/ios" element={<IOSTable />} />
       </Routes>
     </>
   );

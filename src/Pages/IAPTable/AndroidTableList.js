@@ -5,37 +5,37 @@ import DataTable from "../../Component/DataTable/DataTable";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddAccount from "../Account/Account";
-import DeleteAccount from "../../Component/DeleteModal/DeleteModal";
+import AddAndroidTable from "../IAPTable/AndroidTable";
+import DeleteAndroidTable from "../../Component/DeleteModal/DeleteModal";
 
-export default function AccountList() {
-  const initialData = {
-    accountid: "",
-    account: "",
+export default function AndroidTableList() {
+  const initialData = { 
+    producttype:""   ,
+    productname: "",
+    productid: "",
+    price: 0, 
+    status:""
   };
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false); 
   const [fields, setFields] = useState(initialData);
-  const [image, setImage] = useState("");
   const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
+    console.log("23", editData);
     setModalShow(true);
     setFields(editData ? editData : fields);
-    setTitle(editData?.accountid ? "Edit Account" : "Add Account");
+    setTitle(editData?.productid ? "Edit Android" : "Add Android");
   };
 
   const handleClose = () => {
     setModalShow(false);
   };
 
-  const handleFileUpload = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
+    setFields({ ...fields, [name]: value });   
+    console.log("field1", fields);
   };
 
   const confirmationModal = (deleteData = {}) => {
@@ -48,45 +48,57 @@ export default function AccountList() {
 
   const columns = [
     {
-      name: "account_id",
-      label: "Account ID",
+      name: "product_type",
+      label: "Type",
     },
     {
-      name: "account",
-      label: "Account",
+      name: "product_name",
+      label: "Product Name",
     },
-    // {
-    //   name: "image",
-    //   label: "Iamge",
-    // },
+    {
+      name: "product_id",
+      label: "Product ID",
+    },
+    {
+      name: "price",
+      label: "Price",
+    },
+    {
+      name: "status",
+      label: "Status",
+    },
     {
       label: "Action",
       name: "action",
       options: {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
-            <Tooltip disableFocusListener title="Edit Account">
+            <Tooltip disableFocusListener title="Edit Android">
               <Button
                 sx={{ color: "#283593" }}
                 onClick={() =>
                   handleOpen({
-                    accountid: tableMeta.rowData[0],
-                    account: tableMeta.rowData[1],
-                    image: tableMeta.rowData[2],
+                    producttype: tableMeta.rowData[0],
+                    productname: tableMeta.rowData[1],
+                    productid: tableMeta.rowData[2],
+                    price: tableMeta.rowData[3],
+                    status: tableMeta.rowData[4],
                   })
                 }
               >
                 <EditIcon />
               </Button>
             </Tooltip>
-            <Tooltip disableFocusListener title="Delete Account">
+            <Tooltip disableFocusListener title="Delete Android">
               <Button
                 sx={{ color: "#ff5252" }}
                 onClick={() =>
                   confirmationModal({
-                    accountid: tableMeta.rowData[0],
-                    account: tableMeta.rowData[1],
-                    image: tableMeta.rowData[2],
+                    producttype: tableMeta.rowData[0],
+                    productname: tableMeta.rowData[1],
+                    productid: tableMeta.rowData[2],
+                    price: tableMeta.rowData[3],
+                    status: tableMeta.rowData[4],
                   })
                 }
               >
@@ -100,10 +112,34 @@ export default function AccountList() {
   ];
 
   const data = [
-    { account_id: 1, account: "Test Corp" },
-    { account_id: 2, account: "Test Corp" },
-    { account_id: 3, account: "Test Corp" },
-    { account_id: 4, account: "Test Corp" },
+    {
+      product_type: "Consumable",
+      product_name: "computer",
+      product_id: 1,
+      price: 12,
+      status: 'Active'
+    },
+    {
+      product_type: "Non-consumable",
+      product_name: "laptop",
+      product_id: 2,
+      price: 12,
+      status: 'In-Active'
+    },
+    {
+      product_type: "Auto-renewable-subscriptions",
+      product_name: "key-board",
+      product_id: 3,
+      price: 12,
+      status: 'Active'
+    },
+    {
+      product_type: "Non-renewing-subscriptions",
+      product_name: "mouse",
+      product_id: 4,
+      price: 12,
+      status: 'Active'
+    },
   ];
 
   const options = {
@@ -114,7 +150,7 @@ export default function AccountList() {
     viewColumns: false,
     filter: false,
     customToolbar: () => (
-      <Tooltip disableFocusListener title="Add Account">
+      <Tooltip disableFocusListener title="Add Android">
         <Button onClick={handleOpen}>
           <AddIcon />
         </Button>
@@ -128,21 +164,19 @@ export default function AccountList() {
         <Box className="mt-4 mx-5">
           <Card sx={{ boxShadow: "0 4px 24px 0 rgb(34 41 47 / 10%)" }}>
             <DataTable
-              title={"Account"}
+              title={"Android"}
               data={data}
               columns={columns}
               options={options}
             />
-            <AddAccount
+            <AddAndroidTable
               openModal={modalShow}
               closeModal={handleClose}
               title={title}
               fields={fields}
-              image={image}
               handleChange={handleChange}
-              handleFileUpload={handleFileUpload}
             />
-            <DeleteAccount
+            <DeleteAndroidTable
               title={"Are You Sure You Want To Delete???"}
               openModal={confirmation}
               closeModal={closeConfrimation}

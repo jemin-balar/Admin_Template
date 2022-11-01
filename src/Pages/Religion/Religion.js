@@ -27,6 +27,7 @@ export default function Religion(props) {
             name="religion"
             variant="standard"
             placeholder="Religion"
+            required
             value={fields.religion}
             onChange={handleChange}
           />         

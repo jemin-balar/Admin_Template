@@ -6,18 +6,22 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddOccupation from "../Occupation/Occupation";
+import DeleteOccupation from "../../Component/DeleteModal/DeleteModal";
 
 export default function OccupationList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({    
+  const initialData = {
     occupationid: "",
     occupation: "",
-  });
+  };
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Occupation" : "Add Occupation");
+    setFields(editData ? editData : fields);
+    setTitle(editData?.occupationid ? "Edit Occupation" : "Add Occupation");
   };
 
   const handleClose = () => {
@@ -29,14 +33,22 @@ export default function OccupationList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [   
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "occupation_id",
-      label: "Occupation ID",    
+      label: "Occupation ID",
     },
     {
       name: "occupation",
-      label: "Occupation",    
+      label: "Occupation",
     },
     {
       label: "Action",
@@ -45,12 +57,28 @@ export default function OccupationList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Occupation">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    occupationid: tableMeta.rowData[0],
+                    occupation: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
             <Tooltip disableFocusListener title="Delete Occupation">
-              <Button sx={{ color: "#ff5252" }}>
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    occupationid: tableMeta.rowData[0],
+                    occupation: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,15 +89,15 @@ export default function OccupationList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { occupation_id: 1, occupation: "Test Corp" },
+    { occupation_id: 2, occupation: "Test Corp" },
+    { occupation_id: 3, occupation: "Test Corp" },
+    { occupation_id: 4, occupation: "Test Corp" },
   ];
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -100,6 +128,11 @@ export default function OccupationList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+            <DeleteOccupation
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>

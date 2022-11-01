@@ -6,18 +6,26 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddPassionsOrHobbies from "./PassionsOrHobbies";
+import DeletePassionsOrHobbies from "../../Component/DeleteModal/DeleteModal";
 
 export default function CommunityList() {
-  const [modalShow, setModalShow] = useState(false);
-  const [fields, setFields] = useState({   
+  const initialData = {
     passionsorhobbiesid: "",
     passionsorhobbies: "",
-  });
+  };
+  const [modalShow, setModalShow] = useState(false);
+  const [fields, setFields] = useState(initialData);
+  const [confirmation, setConfirmation] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleOpen = (editData = {}) => {
     setModalShow(true);
-    setTitle(editData?._id ? "Edit Passions Or Hobbies" : "Add Passions Or Hobbies");
+    setFields(editData ? editData : fields);
+    setTitle(
+      editData?.passionsorhobbiesid
+        ? "Edit Passions Or Hobbies"
+        : "Add Passions Or Hobbies"
+    );
   };
 
   const handleClose = () => {
@@ -29,7 +37,15 @@ export default function CommunityList() {
     setFields({ ...fields, [name]: value });
   };
 
-  const columns = [   
+  const confirmationModal = (deleteData = {}) => {
+    setConfirmation(true);
+  };
+
+  const closeConfrimation = () => {
+    setConfirmation(false);
+  };
+
+  const columns = [
     {
       name: "passionsorhobbies_id",
       label: "Passions Or Hobbies ID",
@@ -45,12 +61,28 @@ export default function CommunityList() {
         customBodyRender: (value, tableMeta) => (
           <div className="action">
             <Tooltip disableFocusListener title="Edit Passions Or Hobbies">
-              <Button sx={{ color: "#283593" }}>
+              <Button
+                sx={{ color: "#283593" }}
+                onClick={() =>
+                  handleOpen({
+                    passionsorhobbiesid: tableMeta.rowData[0],
+                    passionsorhobbies: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <EditIcon />
               </Button>
             </Tooltip>
             <Tooltip disableFocusListener title="Delete Passions Or Hobbies">
-              <Button sx={{ color: "#ff5252" }}>
+              <Button
+                sx={{ color: "#ff5252" }}
+                onClick={() =>
+                  confirmationModal({
+                    passionsorhobbiesid: tableMeta.rowData[0],
+                    passionsorhobbies: tableMeta.rowData[1],
+                  })
+                }
+              >
                 <DeleteIcon />
               </Button>
             </Tooltip>
@@ -61,16 +93,15 @@ export default function CommunityList() {
   ];
 
   const data = [
-    [1, "Test Corp"],
-    [2, "Test Corp"],
-    [3, "Test Corp"],
-    [4, "Test Corp"],
+    { passionsorhobbies_id: 1, passionsorhobbies: "Test Corp" },
+    { passionsorhobbies_id: 2, passionsorhobbies: "Test Corp" },
+    { passionsorhobbies_id: 3, passionsorhobbies: "Test Corp" },
+    { passionsorhobbies_id: 4, passionsorhobbies: "Test Corp" },
   ];
-
 
   const options = {
     // serverSide: true,
-    selectableRows: false,
+    selectableRows: "none",
     download: false,
     print: false,
     viewColumns: false,
@@ -101,6 +132,11 @@ export default function CommunityList() {
               title={title}
               fields={fields}
               handleChange={handleChange}
+            />
+            <DeletePassionsOrHobbies
+              title={"Are You Sure You Want To Delete???"}
+              openModal={confirmation}
+              closeModal={closeConfrimation}
             />
           </Card>
         </Box>
